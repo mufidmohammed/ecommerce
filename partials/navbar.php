@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 d-block" data-navbar-on-scroll="data-navbar-on-scroll">
-    <div class="container"><a class="navbar-brand d-inline-flex" href="index.html"><img class="d-inline-block"
+    <div class="container"><a class="navbar-brand d-inline-flex" href="../public/index.php"><img class="d-inline-block"
                 src="../assets/img/gallery/logo.png" alt="logo" /><span
                 class="text-1000 fs-0 fw-bold ms-2">Majestic</span></a>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"

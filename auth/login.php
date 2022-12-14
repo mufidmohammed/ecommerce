@@ -37,14 +37,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
             if (password_verify($password, $hashed_password))
             {
-                // authenticate user and 
-                // redirect to home page
+                // authenticate user
                 $_SESSION['auth'] = true;
                 
                 if ($data['id']  === '1')
                 {
                     $_SESSION['auth_admin'] = true;
                 }
+
+                // close connection and redirect to homepage
+                $conn->close();
+
                 $location = '../public/index.php';
 
                 header("location: {$location}");
@@ -58,6 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     }
 
 }
+
+// close connection
+$conn->close();
 
 ?>
 <?php require_once('../partials/header.php') ?>
