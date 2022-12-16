@@ -1,5 +1,6 @@
 <?php 
 
+require('../auth.php');
 require('../../db/database.php');
 require('../../app/validation.php');
 

@@ -4,5 +4,5 @@ session_start();
 
 session_destroy();
 
-$location = 'login.php';
+$location = '/ecommerce/auth/login.php';
 header("location: {$location}");

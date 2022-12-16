@@ -1,3 +1,5 @@
+<?php require('../auth.php') ?>
+
 <?php 
 
 require('../../db/database.php');

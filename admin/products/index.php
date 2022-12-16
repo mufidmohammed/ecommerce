@@ -1,5 +1,6 @@
-<?php 
+<?php
 
+require('../auth.php');
 require('../../db/database.php');
 
 $sql = "SELECT * FROM `products` WHERE 1";

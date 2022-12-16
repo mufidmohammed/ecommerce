@@ -1,3 +1,5 @@
+<?php require('auth.php') ?>
+
 <?php include('partials/header.php') ?>
 
     <div class="container-fluid">

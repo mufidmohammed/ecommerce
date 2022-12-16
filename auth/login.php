@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         $errors['password'] = 'Enter your password';
     } else 
     {
-        $sql = "SELECT `id`, `password` from `users` WHERE `email` = '$email' ";
+        $sql = "SELECT * from `users` WHERE `email` = '$email' ";
 
         $query = $conn->query($sql);
 
@@ -39,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             {
                 // authenticate user
                 $_SESSION['auth'] = true;
-                
-                if ($data['id']  === '1')
+
+                if ($data['utype']  === 'ADM')
                 {
                     $_SESSION['auth_admin'] = true;
                 }

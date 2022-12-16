@@ -1,5 +1,7 @@
 <?php
 
+require('../auth.php');
+
 require('../../db/database.php');
 
 $id = $_GET['id'];
