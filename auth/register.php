@@ -77,13 +77,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 (`name`, `email`, `phone_number`, `password`, `gender`) 
                 VALUES 
                 ('$name', '$email', '$phone_number', '$password', '$gender')";
-            
-        // if ($conn -> query($sql)) 
-        // {
-        //     $location = './login.php';
-
-        //     header("location: {$location}");
-        // }
 
         $conn->query($sql);
 

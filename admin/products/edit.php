@@ -18,15 +18,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $price = $_POST['price'];
     $gender = $_POST['gender'];
     $description = $_POST['description'];
-    $image = $_POST['image'];
+    $image = $_FILES['image']['name'];
     $quantity = $_POST['quantity'];
 
     $sql = "UPDATE `products` SET `name`='$name', `category`='$category', `price`='$price', `gender`='$gender', `description`='$description', `image`='$image', `quantity`='$quantity' WHERE `id`='$id' ";
 
-    if ($conn->query($sql))
-    {
-        header("location: index.php");
-    }
+    $filename = $_FILES['image']['tmp_name'];
+    $destination = '../../assets/img/gallery/' . $image;
+
+    move_uploaded_file($filename, $destination);
+
+    $conn->query($sql);
+
+    $conn->close();
+
+    header("location: index.php");
 }
 
 $conn->close();
@@ -52,7 +58,7 @@ $conn->close();
             <div class="container">
                 <div class="row">
                     <div class="col-6">
-                        <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) . '?id=' . $id ?>" method="POST">
+                        <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) . '?id=' . $id ?>" method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label class="form-label">Name</label>
                                 <input type="text" class="form-control" name="name" value="<?= $product['name'] ?>">

@@ -54,7 +54,7 @@
                             more
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">dashboard</a></li>
+                            <li><a class="dropdown-item" href="/ecommerce/admin/dashboard.php">dashboard</a></li>
                             <li><a class="dropdown-item" href="../auth/logout.php">logout</a></li>
                         </ul>
                     </div>

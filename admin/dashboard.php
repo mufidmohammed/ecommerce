@@ -1,4 +1,4 @@
-<?php require('auth.php') ?>
+<?php require('auth.php'); ?>
 
 <?php include('partials/header.php') ?>
 

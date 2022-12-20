@@ -9,6 +9,7 @@ $sql = "SELECT * FROM `products` WHERE 1";
 $query = $conn->query($sql);
 
 $name = $category = $price = $gender = $description = $image = $quantity = NULL;
+$file_error = NULL;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
@@ -17,20 +18,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $price = $_POST['price'];
     $gender = $_POST['gender'];
     $description = $_POST['description'];
-    $image = $_POST['image'];
     $quantity = $_POST['quantity'];
+    $image = $_FILES['image']['name'];
 
     $sql = "INSERT INTO `products` (`name`, `category`, `price`, `gender`, `description`, `image`, `quantity`) 
                             VALUES ('$name', '$category', '$price', '$gender', '$description', '$image', '$quantity')";
 
-    if ($conn->query($sql))
+    $file_name = $_FILES['image']['tmp_name'];
+    $storage_path = '../../assets/img/gallery/' . $image;
+
+    // echo "<pre>";
+    // var_dump($file_name, $storage_path);
+    // echo "</pre>";
+    // return;
+
+    if (file_exists($storage_path))
     {
+        $file_error = 'image already exist';
+    } else 
+    {
+        if (!move_uploaded_file($file_name, $storage_path))
+        {
+            echo "Error moving image";
+            return;
+        };
+
+        $conn->query($sql);
+
         $conn->close();
 
+
         header("location: index.php");
+
     }
-
-
 
 }
 
@@ -56,7 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 <div class="row">
                     <div class="col-6">
                         <!-- form -->
-                        <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
+                        <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST"
+                            enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label class="form-label">Name</label>
                                 <input type="text" class="form-control" name="name" value="<?= $name ?>">
@@ -92,6 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
                                 <label class="form-label">Image</label>
                                 <input type="file" name="image" value="<?= $image ?>" step="0.01" class="form-control">
+                                <div class="form-text text-danger"><?= $file_error ?></div>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Submit</button>
