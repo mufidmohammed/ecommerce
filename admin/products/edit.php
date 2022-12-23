@@ -16,12 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $name = $_POST['name'];
     $category = $_POST['category'];
     $price = $_POST['price'];
-    $gender = $_POST['gender'];
+    $type = $_POST['type'];
     $description = $_POST['description'];
     $image = $_FILES['image']['name'];
     $quantity = $_POST['quantity'];
 
-    $sql = "UPDATE `products` SET `name`='$name', `category`='$category', `price`='$price', `gender`='$gender', `description`='$description', `image`='$image', `quantity`='$quantity' WHERE `id`='$id' ";
+    if ($image)
+        $sql = "UPDATE `products` SET `name`='$name', `category`='$category', `price`='$price', `type`='$type', `description`='$description', `image`='$image', `quantity`='$quantity' WHERE `id`='$id' ";
+    else
+        $sql = "UPDATE `products` SET `name`='$name', `category`='$category', `price`='$price', `type`='$type', `description`='$description', `quantity`='$quantity' WHERE `id`='$id' ";
 
     $filename = $_FILES['image']['tmp_name'];
     $destination = '../../assets/img/gallery/' . $image;
@@ -65,7 +68,15 @@ $conn->close();
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Category</label>
-                                <input type="text" class="form-control" name="category" value="<?= $product['category'] ?>">
+                                <select name="category" class="form-control">
+                                    <option value=""></option>
+                                    <option <?php if($product['category'] === 'T-shirt') echo "selected"; ?> value="T-shirt">T-shirt</option>
+                                    <option <?php if($product['category'] === 'shirt') echo "selected"; ?> value="shirt">Shirt</option>
+                                    <option <?php if($product['category'] === 'shoe') echo "selected"; ?> value="shoe">Shoe</option>
+                                    <option <?php if($product['category'] === 'watch') echo "selected"; ?> value="watch">Watch</option>
+                                    <option <?php if($product['category'] === 'sunglass') echo "selected"; ?> value="sunglass">Sunglass</option>
+                                    <option <?php if($product['category'] === 'bagpack') echo "selected"; ?> value="bagpack">Bagpack</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Price</label>
@@ -73,11 +84,11 @@ $conn->close();
                                     class="form-control">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Gender</label>
-                                <select name="gender" class="form-control">
+                                <label class="form-label">Type</label>
+                                <select name="type" class="form-control">
                                     <option value=""></option>
-                                    <option <?php if($product['gender'] === 'Male') echo "selected"; ?> value="Male">Male</option>
-                                    <option <?php if($product['gender'] === 'Female') echo "selected"; ?> value="Female">Female
+                                    <option <?php if($product['type'] === 'Men') echo "selected"; ?> value="Men">Men</option>
+                                    <option <?php if($product['type'] === 'Women') echo "selected"; ?> value="Women">Women
                                     </option>
                                 </select>
                             </div>

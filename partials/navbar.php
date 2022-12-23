@@ -61,7 +61,16 @@
                 <?php elseif (isset($_SESSION['auth'])) : ?>
                     <a href="../auth/logout.php" class="btn btn-light py-1 px-4" role="button">Logout</a>
                 <?php else: ?>
-                    <a href="../auth/login.php" class="btn btn-light py-1 px-4" role="button">Login</a>
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle py-1 px-4" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            more
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../auth/login.php">Login</a></li>
+                            <li><a class="dropdown-item" href="../auth/register.php">Signup</a></li>
+                        </ul>
+                    </div>
                 <?php endif ?>
 
             </form>

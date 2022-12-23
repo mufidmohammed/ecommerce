@@ -8,7 +8,7 @@ $sql = "SELECT * FROM `products` WHERE 1";
 
 $query = $conn->query($sql);
 
-$name = $category = $price = $gender = $description = $image = $quantity = NULL;
+$name = $category = $price = $type = $description = $image = $quantity = NULL;
 $file_error = NULL;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
@@ -16,26 +16,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $name = $_POST['name'];
     $category = $_POST['category'];
     $price = $_POST['price'];
-    $gender = $_POST['gender'];
+    $type = $_POST['type'];
     $description = $_POST['description'];
     $quantity = $_POST['quantity'];
     $image = $_FILES['image']['name'];
 
-    $sql = "INSERT INTO `products` (`name`, `category`, `price`, `gender`, `description`, `image`, `quantity`) 
-                            VALUES ('$name', '$category', '$price', '$gender', '$description', '$image', '$quantity')";
+    $sql = "INSERT INTO `products` (`name`, `category`, `price`, `type`, `description`, `image`, `quantity`) 
+                            VALUES ('$name', '$category', '$price', '$type', '$description', '$image', '$quantity')";
 
     $file_name = $_FILES['image']['tmp_name'];
     $storage_path = '../../assets/img/gallery/' . $image;
 
-    // echo "<pre>";
-    // var_dump($file_name, $storage_path);
-    // echo "</pre>";
-    // return;
-
     if (file_exists($storage_path))
     {
         $file_error = 'image already exist';
-    } else 
+    } elseif (!$image) {
+        $file_error = 'Image is required';
+    }
+     else 
     {
         if (!move_uploaded_file($file_name, $storage_path))
         {
@@ -84,19 +82,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Category</label>
-                                <input type="text" class="form-control" name="category" value="<?= $category ?>">
+                                <select name="category" class="form-control">
+                                    <option value=""></option>
+                                    <option <?php if($category === 'T-shirt') echo "selected"; ?> value="T-shirt">T-shirt</option>
+                                    <option <?php if($category === 'shirt') echo "selected"; ?> value="shirt">Shirt</option>
+                                    <option <?php if($category === 'shoe') echo "selected"; ?> value="shoe">Shoe</option>
+                                    <option <?php if($category === 'watch') echo "selected"; ?> value="watch">Watch</option>
+                                    <option <?php if($category === 'sunglass') echo "selected"; ?> value="sunglass">Sunglass</option>
+                                    <option <?php if($category === 'bagpack') echo "selected"; ?> value="bagpack">Bagpack</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Price</label>
-                                <input type="number" name="price" value="<?= $price ?> step=" 0.01"
+                                <input type="number" name="price" value="<?= $price ?>" step="0.01"
                                     class="form-control">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Gender</label>
-                                <select name="gender" class="form-control">
+                                <label class="form-label">Type</label>
+                                <select name="type" class="form-control">
                                     <option value=""></option>
-                                    <option <?php if($gender === 'Male') echo "selected"; ?> value="Male">Male</option>
-                                    <option <?php if($gender === 'Female') echo "selected"; ?> value="Female">Female
+                                    <option <?php if($type === 'Men') echo "selected"; ?> value="Men">Men</option>
+                                    <option <?php if($type === 'Women') echo "selected"; ?> value="Women">Women
                                     </option>
                                 </select>
                             </div>
